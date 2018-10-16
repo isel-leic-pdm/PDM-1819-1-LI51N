@@ -6,25 +6,45 @@ import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
-import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
+import android.widget.ListView
+import android.widget.SimpleCursorAdapter
 import android.widget.Toast
 
-class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+class MainActivity : FragmentActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     private val REQUEST_READ_CONTACTS = 5
 
     private val LOAD_CONTACTS = 2
 
-    val text by lazy { findViewById<TextView>(R.id.text) }
+    val listView by lazy { findViewById<ListView>(R.id.listView) }
+
+    val cursorAdapter by lazy {
+        SimpleCursorAdapter(
+                this,
+                android.R.layout.simple_list_item_2,
+                null,
+                arrayOf(
+                        ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
+                        ContactsContract.Contacts.LOOKUP_KEY
+                ),
+                intArrayOf(
+                        android.R.id.text1,
+                        android.R.id.text2
+                ),
+                0
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        listView.adapter = cursorAdapter
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -38,7 +58,6 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
         } else {
             continueOnCreate()
         }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -76,26 +95,11 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
 
     override fun onLoadFinished(loader: Loader<Cursor>, cursor: Cursor?) {
         Toast.makeText(this, "LOAD FINISHED", Toast.LENGTH_LONG).show()
-
-        val contactsCursor = cursor
-
-        val contacts = mutableListOf<String>()
-        if (contactsCursor != null) {
-            if (contactsCursor.moveToFirst()) {
-                val nameIdx = contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
-                do {
-                    contacts.add(contactsCursor.getString(nameIdx))
-                } while (contactsCursor.moveToNext())
-            }
-        }
-
-        val contactsStr = contacts.joinToString("\n") ?: "NO RESULTS"
-        text.text = contactsStr
+        cursorAdapter.swapCursor(cursor)
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) {
         Toast.makeText(this, "LOADER RESET", Toast.LENGTH_LONG).show()
-
-        text.text = ""
+        cursorAdapter.swapCursor(null)
     }
 }
