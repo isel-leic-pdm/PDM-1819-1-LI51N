@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "592034362012",
+    "firebase_url": "https://placard-401ad.firebaseio.com",
+    "project_id": "placard-401ad",
+    "storage_bucket": "placard-401ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592034362012:android:99ef1a01dfbf31b3",
+        "android_client_info": {
+          "package_name": "pt.isel.pdm.jht.placard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592034362012-q40b70d6m0v3tues7ltnrjlspagg900s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.isel.pdm.jht.placard",
+            "certificate_hash": "4ceaeb3157c67d8dd087e7f53feb2e1f39be6727"
+          }
+        },
+        {
+          "client_id": "592034362012-10gl26s5i5rtadrhfnld3943sfftm4j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh3CE9Fx9QZ73pZhT1NiHyD50KgfVvT0Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592034362012-10gl26s5i5rtadrhfnld3943sfftm4j1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
